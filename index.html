@@ -8,34 +8,97 @@
     body {
       font-family: Arial, sans-serif;
       background: #0f172a;
-      color: #ffffff;
+      color: #fff;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      text-align: center;
     }
     .box {
-      max-width: 400px;
-      padding: 20px;
+      width: 90%;
+      max-width: 420px;
       background: #020617;
-      border-radius: 12px;
+      padding: 20px;
+      border-radius: 14px;
       box-shadow: 0 0 20px rgba(0,0,0,.5);
+      text-align: center;
     }
     h1 {
       color: #38bdf8;
     }
-    p {
+    textarea {
+      width: 100%;
+      height: 80px;
+      border-radius: 8px;
+      border: none;
+      padding: 10px;
+      margin-top: 10px;
+      font-size: 16px;
+    }
+    button {
+      margin-top: 10px;
+      padding: 12px;
+      width: 100%;
+      border: none;
+      border-radius: 8px;
+      background: #38bdf8;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    #output {
+      margin-top: 15px;
+      background: #020617;
+      padding: 10px;
+      border-radius: 8px;
       color: #cbd5f5;
+      min-height: 60px;
     }
   </style>
 </head>
 <body>
-  <div class="box">
-    <h1>MinutoIA</h1>
-    <p>AI for text & ideas</p>
-    <p>Site funcionando ✅</p>
-  </div>
+
+<div class="box">
+  <h1>MinutoIA</h1>
+  <p>AI for text & ideas</p>
+
+  <textarea id="prompt" placeholder="Type your idea..."></textarea>
+  <button onclick="generate()">Generate</button>
+
+  <div id="output">Response will appear here...</div>
+</div>
+
+<script>
+async function generate() {
+  const input = document.getElementById("prompt").value;
+  const output = document.getElementById("output");
+
+  if (!input) {
+    output.innerText = "Type something first.";
+    return;
+  }
+
+  output.innerText = "Thinking...";
+
+  try {
+    const response = await fetch(
+      "https://api-inference.huggingface.co/models/gpt2",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ inputs: input })
+      }
+    );
+
+    const data = await response.json();
+    output.innerText = data[0]?.generated_text || "No response.";
+  } catch (e) {
+    output.innerText = "Error connecting to AI.";
+  }
+}
+</script>
+
 </body>
 </html>
