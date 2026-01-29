@@ -1,47 +1,36 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>MinutoIA</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
       font-family: Arial, sans-serif;
       background: #0f172a;
       color: #fff;
       margin: 0;
-      padding: 0;
-    }
-    header {
-      background: #020617;
-      padding: 15px;
-      text-align: center;
-      font-size: 22px;
-      font-weight: bold;
-    }
-    main {
       padding: 20px;
     }
-    textarea {
+    h1 {
+      text-align: center;
+      color: #38bdf8;
+    }
+    textarea, input, button {
       width: 100%;
-      height: 120px;
+      margin-top: 10px;
+      padding: 12px;
       border-radius: 8px;
       border: none;
-      padding: 10px;
       font-size: 16px;
     }
     button {
-      margin-top: 10px;
-      width: 100%;
-      padding: 12px;
-      background: #2563eb;
-      border: none;
-      border-radius: 8px;
-      color: white;
-      font-size: 18px;
+      background: #38bdf8;
+      color: #000;
+      font-weight: bold;
       cursor: pointer;
     }
-    .output {
+    #result {
       margin-top: 20px;
       background: #020617;
       padding: 15px;
@@ -52,23 +41,27 @@
 </head>
 <body>
 
-<header>MinutoIA — AI for Text & Images</header>
+<h1>MinutoIA</h1>
+<p>Create professional AI text in seconds.</p>
 
-<main>
-  <p>Type what you want the AI to create:</p>
-  <textarea id="prompt" placeholder="Example: Write a sales text for a restaurant"></textarea>
-  <button onclick="generate()">Generate</button>
+<textarea id="prompt" placeholder="Write what you want (idea, ad, email, text...)"></textarea>
 
-  <div class="output" id="output">
-    Your AI response will appear here.
-  </div>
-</main>
+<button onclick="generate()">Generate</button>
+
+<div id="result"></div>
 
 <script>
 function generate() {
-  const text = document.getElementById("prompt").value;
-  document.getElementById("output").innerText =
-    "⚠️ AI will be connected next.\n\nYour request:\n" + text;
+  const prompt = document.getElementById("prompt").value;
+  if (!prompt) {
+    alert("Write something first");
+    return;
+  }
+
+  document.getElementById("result").innerHTML =
+    "🚀 AI Response:<br><br>" +
+    "This is where your AI text will appear. " +
+    "Next step we will connect a real AI API.";
 }
 </script>
 
